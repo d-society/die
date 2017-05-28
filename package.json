@@ -1,5 +1,5 @@
 {
-  "name": "die",
+  "name": "@d-society/die",
   "version": "0.1.0",
   "description": "A small rollable object with multiple resting positions, used for generating random numbers.",
   "main": "dist/die.js",
@@ -13,7 +13,10 @@
     "test": "mocha",
     "prepublish": "npm test"
   },
-  "repository": "d-society/die",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d-society/die.git"
+  },
   "keywords": [
     "die",
     "dice",
@@ -22,11 +25,12 @@
     "number",
     "generator"
   ],
-  "author": "Anthony Telljohann-Smothers",
+  "author": "Anthony Telljohann-Smothers <anthony@telljohann-smothers.com> (https://github.com/atelljohannsmothers)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/d-society/die/issues"
   },
+  "homepage": "https://github.com/d-society/die",
   "files": [
     "lib",
     "dist"
