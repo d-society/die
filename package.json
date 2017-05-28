@@ -1,0 +1,55 @@
+{
+  "name": "@d-society/die",
+  "version": "0.1.0",
+  "description": "A small rollable object with multiple resting positions, used for generating random numbers.",
+  "main": "dist/die.js",
+  "module": "dist/die.mjs",
+  "jsnext:main": "dist/die.mjs",
+  "scripts": {
+    "prebuild": "eslint lib test",
+    "build": "rollup -c --environment BUILD:production",
+    "watch": "rollup -c -w",
+    "pretest": "rollup -c",
+    "test": "mocha",
+    "prepublish": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d-society/die.git"
+  },
+  "keywords": [
+    "die",
+    "dice",
+    "constructor",
+    "random",
+    "number",
+    "generator"
+  ],
+  "author": "Anthony Telljohann-Smothers <anthony@telljohann-smothers.com> (https://github.com/atelljohannsmothers)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d-society/die/issues"
+  },
+  "homepage": "https://github.com/d-society/die",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "homepage": "https://github.com/d-society/die#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "latest",
+    "babel-plugin-external-helpers": "latest",
+    "babel-preset-es2015": "latest",
+    "babel-register": "latest",
+    "babelrc-rollup": "latest",
+    "chai": "latest",
+    "eslint": "latest",
+    "istanbul": "latest",
+    "mocha": "latest",
+    "rollup": "latest",
+    "rollup-plugin-babel": "latest",
+    "rollup-plugin-istanbul": "latest",
+    "rollup-watch": "latest"
+  }
+}
