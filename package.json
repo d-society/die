@@ -1,6 +1,6 @@
 {
   "name": "@d-society/die",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A small rollable object with multiple resting positions, used for generating random numbers.",
   "main": "dist/die.js",
   "module": "dist/die.mjs",
