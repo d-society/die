@@ -4,7 +4,6 @@
   "description": "A small rollable object with multiple resting positions, used for generating random numbers.",
   "main": "dist/die.js",
   "module": "dist/die.mjs",
-  "jsnext:main": "dist/die.mjs",
   "scripts": {
     "prebuild": "eslint lib test",
     "build": "rollup -c --environment BUILD:production",
@@ -30,13 +29,14 @@
   "bugs": {
     "url": "https://github.com/d-society/die/issues"
   },
-  "homepage": "https://github.com/d-society/die",
+  "homepage": "https://github.com/d-society/die#readme",
   "files": [
     "lib",
     "dist"
   ],
-  "homepage": "https://github.com/d-society/die#readme",
-  "dependencies": {},
+  "dependencies": {
+    "mersenne-twister": "latest"
+  },
   "devDependencies": {
     "babel-eslint": "latest",
     "babel-plugin-external-helpers": "latest",
@@ -49,7 +49,9 @@
     "mocha": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "latest",
+    "rollup-plugin-commonjs": "latest",
     "rollup-plugin-istanbul": "latest",
+    "rollup-plugin-node-resolve": "latest",
     "rollup-watch": "latest"
   }
 }

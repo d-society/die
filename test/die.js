@@ -15,6 +15,10 @@ describe('a die', () => {
     die.should.have.property('sides')
   })
 
+  it('should roll', () => {
+    die.should.have.property('roll')
+  })
+
   describe('sides', () => {
     it('should be a number', () => {
       die.sides.should.be.a('Number')
@@ -55,11 +59,11 @@ describe('a die', () => {
 
   describe('rolling a die', () => {
     var dieRolls
-    var possibleDieRolls
-    const NUMBER_OF_DIE_ROLLS = 1000
+    var possibleRollOutcomes
+    const NUMBER_OF_DIE_ROLLS = 100
     before(() => {
       sides = 20
-      die = new Die(20)
+      die = new Die(sides)
       dieRolls = new Array()
       for (
         let currentDieRoll = 0;
@@ -68,25 +72,29 @@ describe('a die', () => {
       ) {
         dieRolls.push(die.roll())
       }
-      possibleDieRolls = Array.from(new Set(possibleDieRolls))
+      possibleRollOutcomes = Array.from(new Set(dieRolls))
     })
 
     it('should return a number', () => {
       die.roll().should.be.a('Number')
     })
 
-    it('should return a number greater than or equal to 1', () => {
-      possibleDieRolls.every(possibleDieRoll => {
-        return possibleDieRoll >= 1
+    it('should return a number greater than or equal to minimum roll', () => {
+      possibleRollOutcomes.every(possibleRollOutcome => {
+        return possibleRollOutcome >= MINIMUM_ROLL
       }).should.be.true
     })
 
     it('should return a number less than or equal to its sides', () => {
-      possibleDieRolls.every(possibleDieRoll => {
-        return possibleDieRoll <= sides
+      possibleRollOutcomes.every(possibleRollOutcome => {
+        return possibleRollOutcome <= die.sides
       }).should.be.true
     })
 
-    it('should return a random number', () => {})
+    it('should return a number for every side', () => {
+      for (let currentSide = 1; currentSide < die.sides; currentSide++) {
+        possibleRollOutcomes.includes(currentSide).should.be.true
+      }
+    })
   })
 })
