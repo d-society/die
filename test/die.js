@@ -4,13 +4,12 @@ import MINIMUM_ROLL from '../lib/MINIMUM_ROLL'
 import MINIMUM_SIDES from '../lib/MINIMUM_SIDES'
 
 var die
+var possibleRolls
 var sides
 
-before(() => {
-  die = new Die()
-})
-
 describe('a die', () => {
+  before(constructDieWithoutSides)
+
   it('should have sides', () => {
     die.should.have.property('sides')
   })
@@ -27,6 +26,8 @@ describe('a die', () => {
 
   describe('constructing a die', () => {
     describe('without sides', function() {
+      before(constructDieWithoutSides)
+
       it('should have sides equal to minimum sides', () => {
         die.sides.should.equal(MINIMUM_SIDES)
       })
@@ -34,10 +35,7 @@ describe('a die', () => {
 
     describe('with sides', () => {
       describe('less than the minimum', () => {
-        before(() => {
-          sides = MINIMUM_SIDES - 1
-          die = new Die(sides)
-        })
+        before(constructDieWithSidesLessThanMinimum)
 
         it('should have sides equal to minimum sides', () => {
           die.sides.should.equal(MINIMUM_SIDES)
@@ -45,10 +43,7 @@ describe('a die', () => {
       })
 
       describe('greater than or equal to minimum', () => {
-        before(() => {
-          sides = MINIMUM_SIDES + 1
-          die = new Die(sides)
-        })
+        before(constructDieWithSidesGreaterThanMinimum)
 
         it('should have size equal specified sides', () => {
           die.sides.should.equal(sides)
@@ -58,43 +53,73 @@ describe('a die', () => {
   })
 
   describe('rolling a die', () => {
-    var dieRolls
-    var possibleRollOutcomes
-    const NUMBER_OF_DIE_ROLLS = 100
-    before(() => {
-      sides = 20
-      die = new Die(sides)
-      dieRolls = new Array()
-      for (
-        let currentDieRoll = 0;
-        currentDieRoll < NUMBER_OF_DIE_ROLLS;
-        currentDieRoll++
-      ) {
-        dieRolls.push(die.roll())
-      }
-      possibleRollOutcomes = Array.from(new Set(dieRolls))
-    })
-
-    it('should return a number', () => {
+    it('should produce a number', () => {
       die.roll().should.be.a('Number')
     })
 
-    it('should return a number greater than or equal to minimum roll', () => {
-      possibleRollOutcomes.every(possibleRollOutcome => {
-        return possibleRollOutcome >= MINIMUM_ROLL
-      }).should.be.true
-    })
+    describe('every possible roll', () => {
+      before(constructD100)
+      before(rollDie)
 
-    it('should return a number less than or equal to its sides', () => {
-      possibleRollOutcomes.every(possibleRollOutcome => {
-        return possibleRollOutcome <= die.sides
-      }).should.be.true
-    })
+      it(`should be at least ${MINIMUM_ROLL}`, () => {
+        possibleRolls.every(isAtLeastMinimumRoll)
+      })
 
-    it('should return a number for every side', () => {
-      for (let currentSide = 1; currentSide < die.sides; currentSide++) {
-        possibleRollOutcomes.includes(currentSide).should.be.true
-      }
+      it('should be at most number of sides', () => {
+        possibleRolls.every(isAtMostNumberOfSides)
+      })
+      it('should exist for a side', () => {
+        for (let currentSide = 1; currentSide < die.sides; currentSide++) {
+          possibleRolls.includes(currentSide).should.be.true
+        }
+      })
     })
   })
 })
+
+//////////
+
+function isAtLeastMinimumRoll(value) {
+  return value.should.be.at.least(MINIMUM_ROLL)
+}
+
+function isAtMostNumberOfSides(value) {
+  return value.should.be.at.most(die.sides)
+}
+
+function rollDie() {
+  possibleRolls = new Set()
+  do {
+    possibleRolls.add(die.roll())
+  } while (possibleRolls.size !== die.sides)
+  possibleRolls = Array.from(possibleRolls)
+}
+
+function constructDie(numberOfSides) {
+  setSides(numberOfSides)
+  setDie(new Die(sides))
+}
+
+function constructDieWithoutSides() {
+  constructDie()
+}
+
+function constructDieWithSidesLessThanMinimum() {
+  constructDie(MINIMUM_SIDES - 1)
+}
+
+function constructDieWithSidesGreaterThanMinimum() {
+  constructDie(MINIMUM_SIDES + 1)
+}
+
+function constructD100() {
+  constructDie(100)
+}
+
+function setDie(value) {
+  die = value
+}
+
+function setSides(value) {
+  sides = value
+}
