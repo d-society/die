@@ -1,10 +1,15 @@
 import Die from '../dist/die'
-import 'chai/register-should'
-import MINIMUM_ROLL from '../lib/MINIMUM_ROLL'
+import chai from 'chai'
+import chaiThings from 'chai-things'
+import MINIMUM_SIDE from '../lib/MINIMUM_SIDE'
 import MINIMUM_SIDES from '../lib/MINIMUM_SIDES'
+import range from 'fill-range'
+
+chai.should()
+chai.use(chaiThings)
 
 var die
-var possibleRolls
+var dieRolls
 var sides
 
 describe('a die', () => {
@@ -20,7 +25,7 @@ describe('a die', () => {
 
   describe('sides', () => {
     it('should be a number', () => {
-      die.sides.should.be.a('Number')
+      die.getSides().should.be.a('number')
     })
   })
 
@@ -28,50 +33,47 @@ describe('a die', () => {
     describe('without sides', function() {
       before(constructDieWithoutSides)
 
-      it('should have sides equal to minimum sides', () => {
-        die.sides.should.equal(MINIMUM_SIDES)
+      it(`should have ${MINIMUM_SIDES} sides`, () => {
+        die.getSides().should.equal(MINIMUM_SIDES)
       })
     })
 
-    describe('with sides', () => {
-      describe('less than the minimum', () => {
-        before(constructDieWithSidesLessThanMinimum)
+    describe(`with less than ${MINIMUM_SIDES} sides`, () => {
+      before(constructDieWithSidesLessThanMinimum)
 
-        it('should have sides equal to minimum sides', () => {
-          die.sides.should.equal(MINIMUM_SIDES)
-        })
+      it(`should have ${MINIMUM_SIDES} sides`, () => {
+        die.getSides().should.equal(MINIMUM_SIDES)
       })
+    })
 
-      describe('greater than or equal to minimum', () => {
-        before(constructDieWithSidesGreaterThanMinimum)
+    describe(`with at least ${MINIMUM_SIDES}`, () => {
+      before(constructDieWithSidesGreaterThanMinimum)
 
-        it('should have size equal specified sides', () => {
-          die.sides.should.equal(sides)
-        })
+      it('should have specified sides', () => {
+        die.getSides().should.equal(sides)
       })
     })
   })
 
   describe('rolling a die', () => {
-    it('should produce a number', () => {
-      die.roll().should.be.a('Number')
+    before(constructD100)
+    before(rollDie)
+
+    it('should generate a random number', () => {
+      die.roll().should.be.a('number')
     })
 
-    describe('every possible roll', () => {
-      before(constructD100)
-      before(rollDie)
-
-      it(`should be at least ${MINIMUM_ROLL}`, () => {
-        possibleRolls.every(isAtLeastMinimumRoll)
+    describe('randomly generated numbers', () => {
+      it(`should all be at least ${MINIMUM_SIDE}`, () => {
+        dieRolls.should.all.be.at.least(MINIMUM_SIDE)
       })
 
-      it('should be at most number of sides', () => {
-        possibleRolls.every(isAtMostNumberOfSides)
+      it('should all be at most the number of sides', () => {
+        dieRolls.should.all.be.at.most(die.getSides())
       })
-      it('should exist for a side', () => {
-        for (let currentSide = 1; currentSide < die.sides; currentSide++) {
-          possibleRolls.includes(currentSide).should.be.true
-        }
+
+      it(`should range from ${MINIMUM_SIDE} to number of sides`, () => {
+        dieRolls.should.have.members(range(MINIMUM_SIDE, die.getSides()))
       })
     })
   })
@@ -79,20 +81,12 @@ describe('a die', () => {
 
 //////////
 
-function isAtLeastMinimumRoll(value) {
-  return value.should.be.at.least(MINIMUM_ROLL)
-}
-
-function isAtMostNumberOfSides(value) {
-  return value.should.be.at.most(die.sides)
-}
-
 function rollDie() {
-  possibleRolls = new Set()
+  dieRolls = new Set()
   do {
-    possibleRolls.add(die.roll())
-  } while (possibleRolls.size !== die.sides)
-  possibleRolls = Array.from(possibleRolls)
+    dieRolls.add(die.roll())
+  } while (dieRolls.size !== die.sides)
+  dieRolls = Array.from(dieRolls)
 }
 
 function constructDie(numberOfSides) {
