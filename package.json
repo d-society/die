@@ -30,12 +30,11 @@
   "bugs": {
     "url": "https://github.com/d-society/die/issues"
   },
-  "homepage": "https://github.com/d-society/die",
+  "homepage": "https://github.com/d-society/die#readme",
   "files": [
     "lib",
     "dist"
   ],
-  "homepage": "https://github.com/d-society/die#readme",
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "latest",
@@ -49,6 +48,7 @@
     "mocha": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "latest",
+    "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-istanbul": "latest",
     "rollup-watch": "latest"
   }
