@@ -48,8 +48,9 @@
     "mocha": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "latest",
-    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-commonjs": "latest",
     "rollup-plugin-istanbul": "latest",
+    "rollup-plugin-node-resolve": "latest",
     "rollup-watch": "latest"
   }
 }
