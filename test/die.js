@@ -46,7 +46,7 @@ describe('a die', () => {
       })
     })
 
-    describe(`with at least ${MINIMUM_SIDES}`, () => {
+    describe(`with at least ${MINIMUM_SIDES} sides`, () => {
       before(constructDieWithSidesGreaterThanMinimum)
 
       it('should have specified sides', () => {
