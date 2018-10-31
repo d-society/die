@@ -29,6 +29,9 @@ export default {
   entry: 'lib/die.js',
   plugins: plugins,
   external: external,
+  globals: {
+    'mersenne-twister': 'MersenneTwister'
+  },
   targets: [
     {
       dest: pkg.main,

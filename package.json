@@ -4,7 +4,6 @@
   "description": "A small rollable object with multiple resting positions, used for generating random numbers.",
   "main": "dist/die.js",
   "module": "dist/die.mjs",
-  "jsnext:main": "dist/die.mjs",
   "scripts": {
     "prebuild": "eslint lib test",
     "build": "rollup -c --environment BUILD:production",
@@ -35,7 +34,9 @@
     "lib",
     "dist"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "mersenne-twister": "latest"
+  },
   "devDependencies": {
     "babel-eslint": "latest",
     "babel-plugin-external-helpers": "latest",
@@ -43,8 +44,10 @@
     "babel-register": "latest",
     "babelrc-rollup": "latest",
     "chai": "latest",
+    "chai-things": "latest",
     "eslint": "latest",
     "istanbul": "latest",
+    "fill-range": "latest",
     "mocha": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "latest",
